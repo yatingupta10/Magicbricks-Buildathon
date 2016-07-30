@@ -1,0 +1,34 @@
+ <html>
+    <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel=stylesheet type=text/css>
+        <title>Output</title>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div id="container">
+            <div class="title">
+                <h1>Output</h1>
+            </div>
+            <div id="content">
+              <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Tags Generated</th>
+                    <th>Probability Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for out in output %}
+                        {% if loop.index % 2 %}
+                        <tr>
+                            <td>{{out}}</td>
+                        {% else %}
+                            <td>{{out}}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

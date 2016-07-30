@@ -43,9 +43,11 @@ import tarfile
 import numpy as np
 from six.moves import urllib
 import tensorflow as tf
+from app import filename
+#import app
 
-import app
-
+global filename
+filename = sys.argv[1]
 FLAGS = tf.app.flags.FLAGS
 
 # classify_image_graph_def.pb:
@@ -55,15 +57,14 @@ FLAGS = tf.app.flags.FLAGS
 # imagenet_2012_challenge_label_map_proto.pbtxt:
 #   Text representation of a protocol buffer mapping a label to synset ID.
 #print "hi"
-filename=raw_input()
 
 tf.app.flags.DEFINE_string(
     'model_dir', '/tmp/imagenet',
     """Path to classify_image_graph_def.pb, """
     """imagenet_synset_to_human_label_map.txt, and """
     """imagenet_2012_challenge_label_map_proto.pbtxt.""")
-tf.app.flags.DEFINE_string('image_file', '/home/yatingupta/Image/'+filename ,
-                           '/home/yatingupta/Image/'+filename)
+tf.app.flags.DEFINE_string('image_file', '/home/yatingupta/Image/'+ filename ,
+                           '/home/yatingupta/Image/'+ filename)
 tf.app.flags.DEFINE_integer('num_top_predictions', 5,
                             """Display this many predictions.""")
 
@@ -179,12 +180,13 @@ def run_inference_on_image(image):
 
     # Creates node ID --> English string lookup.
     node_lookup = NodeLookup()
-
+    fo=open("output.txt","w")
     top_k = predictions.argsort()[-FLAGS.num_top_predictions:][::-1]
     for node_id in top_k:
       human_string = node_lookup.id_to_string(node_id)
       score = predictions[node_id]
-      print('%s (score = %.5f)' % (human_string, score))
+      fo.write(' %s (score = %.5f)\n' % (human_string, score))
+    fo.close()
 
 
 def maybe_download_and_extract():
@@ -206,7 +208,7 @@ def maybe_download_and_extract():
   tarfile.open(filepath, 'r:gz').extractall(dest_directory)
 
 
-def main(_):
+def main(argv):
   maybe_download_and_extract()
   image = (FLAGS.image_file if FLAGS.image_file else
            os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))

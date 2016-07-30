@@ -1,0 +1,5 @@
+ promontory, headland, head, foreland (score = 0.32875)
+ seashore, coast, seacoast, sea-coast (score = 0.18779)
+ breakwater, groin, groyne, mole, bulwark, seawall, jetty (score = 0.08007)
+ beacon, lighthouse, beacon light, pharos (score = 0.05495)
+ cliff, drop, drop-off (score = 0.02693)
